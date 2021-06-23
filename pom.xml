@@ -1,0 +1,90 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>litemall-wx-api</artifactId>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>org.linlinjava</groupId>
+        <artifactId>litemall</artifactId>
+        <version>0.1.0</version>
+    </parent>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.linlinjava</groupId>
+            <artifactId>litemall-core</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-lang</artifactId>
+                    <groupId>commons-lang</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.linlinjava</groupId>
+            <artifactId>litemall-db</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-pay</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>qrcode-utils</artifactId>
+                    <groupId>com.github.binarywang</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-miniapp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+        </dependency>
+
+        <dependency>
+		    <groupId>com.auth0</groupId>
+		    <artifactId>java-jwt</artifactId>
+		    <version>3.4.1</version>
+		</dependency>
+    </dependencies>
+
+
+<!--    <build>-->
+<!--        <finalName>litemall</finalName>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.tomcat.maven</groupId>-->
+<!--                <artifactId>tomcat7-maven-plugin</artifactId>-->
+<!--                &lt;!&ndash;配置Tomcat插件&ndash;&gt;-->
+<!--                <configuration>-->
+<!--                    <url>http://116.62.136.48:8082/manager/text</url>-->
+<!--                    <port>8080</port>-->
+<!--                    <username>admin</username>-->
+<!--                    <password>123456</password>-->
+<!--                    <update>true</update>-->
+<!--                    &lt;!&ndash;上下文&ndash;&gt;-->
+<!--                    <path>/wx</path>-->
+<!--                    &lt;!&ndash;解决GET请求中的中文乱码问题&ndash;&gt;-->
+<!--                    <uriEncoding>UTF-8</uriEncoding>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
+</project>
