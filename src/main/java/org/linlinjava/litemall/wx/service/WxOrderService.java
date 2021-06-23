@@ -218,6 +218,33 @@ public class WxOrderService {
     }
 
     /**
+     * 商品秒杀
+     * @param userId
+     * @param body
+     * @return
+     */
+    @Transactional
+    public Object miaosha(Integer userId, String body) {
+        //验证
+        if (userId == null) {
+            return ResponseUtil.unlogin();
+        }
+        if (body == null) {
+            return ResponseUtil.badArgument();
+        }
+        Integer cartId = JacksonUtil.parseInteger(body, "cartId");
+        Integer addressId = JacksonUtil.parseInteger(body, "addressId");
+        Integer couponId = JacksonUtil.parseInteger(body, "couponId");
+        Integer userCouponId = JacksonUtil.parseInteger(body, "userCouponId");
+        String message = JacksonUtil.parseString(body, "message");
+        Integer grouponRulesId = JacksonUtil.parseInteger(body, "grouponRulesId");
+        Integer grouponLinkId = JacksonUtil.parseInteger(body, "grouponLinkId");
+
+
+        return null;
+    }
+
+    /**
      * 提交订单
      * <p>
      * 1. 创建订单表项和订单商品表项;

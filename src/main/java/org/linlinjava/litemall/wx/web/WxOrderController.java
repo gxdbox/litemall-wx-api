@@ -1,7 +1,11 @@
 package org.linlinjava.litemall.wx.web;
 
+import com.google.common.util.concurrent.RateLimiter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.linlinjava.litemall.core.config.GlobalExceptionHandler;
+import org.linlinjava.litemall.core.util.CommonRetureUtil;
+import org.linlinjava.litemall.core.util.error.BusinessException;
 import org.linlinjava.litemall.core.validator.Order;
 import org.linlinjava.litemall.core.validator.Sort;
 import org.linlinjava.litemall.wx.annotation.LoginUser;
@@ -10,18 +14,44 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @RestController
 @RequestMapping("/wx/order")
 @Validated
-public class WxOrderController {
+public class WxOrderController extends GlobalExceptionHandler {
     private final Log logger = LogFactory.getLog(WxOrderController.class);
 
     @Autowired
     private WxOrderService wxOrderService;
+    private RateLimiter orderCreateRatelimiter;
+    private ExecutorService executorService;
+    @PostConstruct
+    public void init(){
+        executorService = Executors.newFixedThreadPool(20);
+        orderCreateRatelimiter = RateLimiter.create(300);
+    }
+
+    /**
+     *
+     * @param userId 用户ID
+     * @param body   订单信息，{ cartId：xxx, addressId: xxx, couponId: xxx, message: xxx, grouponRulesId: xxx,  grouponLinkId: xxx}
+     * @return
+     */
+    @RequestMapping(value = "/miaosha",method = RequestMethod.POST,consumes = "application/x-www-form-urlencoded")
+    public CommonRetureUtil miaosha(@LoginUser Integer userId, @RequestBody String body){
+        if (!orderCreateRatelimiter.tryAcquire()){
+
+        }
+
+        wxOrderService.miaosha(userId,body);
+        return CommonRetureUtil.create(null);
+    }
 
     /**
      * 订单列表
